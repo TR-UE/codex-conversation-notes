@@ -1,0 +1,19 @@
+# Local configuration, notes, credentials and generated files stay private.
+export-runtime.json
+**/export-runtime.json
+__pycache__/
+*.pyc
+*.sqlite*
+*.db
+data/
+images/
+notes-data/
+preview.json
+preview.log
+*.log
+.env
+.env.*
+node_modules/
+.DS_Store
+dist/
+.venv/

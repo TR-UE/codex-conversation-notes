@@ -1,0 +1,4 @@
+# Generated third-party bundles retain their upstream whitespace.
+plugin/conversation-notes/web/vendor/** linguist-vendored -whitespace
+plugin/conversation-notes/export/export-engine.mjs linguist-vendored -whitespace
+*.png binary

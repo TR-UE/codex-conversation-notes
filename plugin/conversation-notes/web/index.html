@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-CN" data-style="codex">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>墨记 · 对话批注</title>
+  <style>/*__CSS__*/</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-icon" aria-hidden="true">墨</span><div><strong>墨记</strong><span class="brand-sub">高亮 · 批注 · 留下想法</span></div></div>
+    <div class="top-actions"><span id="save-state" role="status" aria-live="polite">正在连接…</span><button id="appearance-button" class="quiet" aria-label="外观设置"><svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 3a7 7 0 0 0 0 14Z" fill="currentColor"/></svg><span>外观</span></button><button id="export-button" class="quiet">导出</button><button id="import-button" class="primary">＋ 加入原文</button></div>
+  </header>
+  <div class="workspace-bar">
+    <div class="document-control"><label for="document-select" class="sr-only">选择原文</label><select id="document-select"><option value="">选择一份原文</option></select><button id="rename-button" class="quiet" aria-label="修改当前对话标题" hidden>改名</button><button id="sync-button" class="icon-button" title="同步这段对话的新消息" aria-label="同步这段对话的新消息" hidden>↻</button></div>
+    <div class="workspace-actions"><span id="document-summary"></span><button id="source-button" class="quiet" hidden>返回原聊天 ↗</button><button id="capability-button" class="quiet" aria-label="查看能力验证结果">能力说明</button></div>
+  </div>
+  <div class="edit-toolbar"><div><button id="latest-button" class="quiet" hidden>最新消息 ↓</button><button id="manage-button" class="quiet" hidden>选择消息</button><span id="bulk-controls" hidden><button id="select-all-button" class="quiet">全选</button><button id="delete-selected-button" class="quiet danger" disabled>删除选中消息</button></span></div><div><button id="undo-button" class="quiet" hidden>撤销操作</button><button id="delete-document-button" class="quiet danger" hidden>删除这份对话</button><button id="trash-button" class="quiet">回收站</button></div></div>
+  <nav class="mobile-tabs" aria-label="阅读与批注"><button class="active" data-tab="reader">原文</button><button data-tab="notes">批注 <span id="mobile-count">0</span></button></nav>
+  <main id="workspace" data-mobile-tab="reader">
+    <section class="reader-pane" aria-label="对话原文">
+      <div class="pane-heading"><span class="eyebrow">对话原文</span><span class="hint">拖选高亮 · 双击编辑</span></div>
+      <div id="reader-scroll" tabindex="-1"><div id="reader"></div></div>
+      <div id="selection-bar" class="selection-bar" hidden role="toolbar" aria-label="高亮、批注或删除选中文字">
+        <span id="selection-label">已选择文字</span><div id="selection-colors" class="swatches"></div><button id="annotate-button" class="primary">写批注</button><button id="delete-text-button" class="quiet danger">删除文字</button><button id="selection-close" class="icon-button" aria-label="取消选择">×</button>
+      </div>
+    </section>
+    <aside class="notes-pane" aria-label="侧边批注">
+      <div class="notes-heading"><h1>我的批注 <span id="note-count">0</span></h1><span class="small muted">自动保存</span></div>
+      <div class="notes-filters"><label class="search-box"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5" stroke="currentColor" stroke-width="1.5"/><path d="m13 13 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><input id="note-search" placeholder="搜索原句、批注或标签" aria-label="搜索原句、批注或标签"></label><div class="filter-colors" id="filter-colors" role="group" aria-label="按颜色筛选"></div></div>
+      <div id="notes-scroll"><div id="notes"></div></div>
+      <footer class="notes-footer"><span class="privacy-dot"></span>保存在这台电脑 · 可导出备份</footer>
+    </aside>
+  </main>
+  <div id="toast" role="status" aria-live="polite" hidden></div>
+  <dialog id="rename-dialog" aria-labelledby="rename-heading"><form id="rename-form"><div class="dialog-heading"><div><span class="eyebrow">对话标题</span><h2 id="rename-heading">给这份对话改个名字</h2></div><button type="button" class="icon-button" data-close aria-label="关闭修改标题">×</button></div><label>标题<input id="rename-title" maxlength="200" required autocomplete="off"></label><p class="form-help">新标题会用于原文列表和导出的文档。</p><p id="rename-error" class="form-error" role="alert"></p><div class="dialog-footer"><button type="button" class="quiet" data-close>取消</button><button id="rename-save" class="primary">保存标题</button></div></form></dialog>
+  <dialog id="appearance-dialog" class="appearance-dialog" aria-labelledby="appearance-title"><div class="dialog-heading"><div><span class="eyebrow">你的阅读空间</span><h2 id="appearance-title">选择喜欢的外观</h2><p class="form-help">点选即刻预览，自动记住你的选择。</p></div><button class="icon-button" data-close aria-label="关闭外观设置">×</button></div><div id="style-options" class="style-options" role="group" aria-label="阅读风格"></div><div class="appearance-mode"><h3>明暗模式</h3><div class="segmented" role="group" aria-label="明暗模式"><button data-color-mode="auto" aria-pressed="true">跟随系统</button><button data-color-mode="light" aria-pressed="false">浅色</button><button data-color-mode="dark" aria-pressed="false">深色</button></div></div><div class="appearance-summary"><span id="appearance-current"></span><button id="appearance-save-state" class="quiet" aria-live="polite">已记住</button></div><div class="dialog-footer"><button id="appearance-reset" class="quiet">恢复默认</button><button id="appearance-done" class="primary">完成</button></div></dialog>
+  <dialog id="trash-dialog"><div class="dialog-heading"><div><span class="eyebrow">RECENTLY REMOVED</span><h2>回收站</h2></div><button class="icon-button" data-close aria-label="关闭">×</button></div><p class="form-help">这里只删除墨记里的副本，原聊天保留。消息和文字的删减可用“撤销操作”逐步恢复。</p><div id="trash-list"></div></dialog>
+  <dialog id="import-dialog">
+    <form id="import-form"><div class="dialog-heading"><div><span class="eyebrow">A NEW PAGE</span><h2>加入想记住的原文</h2></div><button type="button" class="icon-button" data-close aria-label="关闭">×</button></div>
+      <div class="segmented"><button type="button" data-import-mode="paste" class="active">复制原文</button><button type="button" data-import-mode="thread">本机对话</button><button type="button" data-import-mode="backup">恢复备份</button></div>
+      <div id="paste-fields"><label>标题<input id="import-title" maxlength="200" placeholder="给这段想法起个名字" value="我的对话摘录"></label><label>原文<textarea id="import-body" rows="9" placeholder="在原对话中复制一段文字，粘贴到这里。之后就可以高亮和写批注。"></textarea></label></div>
+      <div id="thread-fields" hidden><label>标题<input id="thread-title" maxlength="200" value="这段对话"></label><label>聊天编号<input id="thread-id" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" spellcheck="false"></label><p class="form-help">从 Codex 的对话路径或聊天链接中找到编号。只导入你指定的这段本机对话；后续可同步新消息。</p></div>
+      <div id="backup-fields" hidden><label class="file-field">选择墨记 JSON 备份<input id="backup-file" type="file" accept=".json,application/json"></label><p class="form-help">恢复为新的原文副本，现有批注会保留。</p></div>
+      <p id="import-error" class="form-error" role="alert"></p><div class="dialog-footer"><button type="button" class="quiet" data-close>取消</button><button id="import-submit" type="submit" class="primary">加入原文</button></div>
+    </form>
+  </dialog>
+  <dialog id="export-dialog"><div class="dialog-heading"><div><span class="eyebrow">KEEP YOUR THOUGHTS</span><h2>把重点带走</h2></div><button class="icon-button" data-close aria-label="关闭">×</button></div><p class="form-help">PDF 和 Word 使用当前删减后的正文、高亮和批注。JSON 是完整备份，包含本机图片、回收站及可撤销的编辑与删除记录。</p><p class="form-help">保留加粗、表格、公式、图片和高亮，按纸张宽度自动分页。公式以高清图形嵌入；Word 的正文与表格仍可编辑。</p><div class="export-options"><button data-export="pdf"><strong>阅读文档 · PDF</strong><span>完整排版、页边批注与编号清单</span></button><button data-export="docx"><strong>可编辑文档 · Word</strong><span>可编辑正文和表格、图片及 Word 原生批注</span></button><button data-export="json"><strong>完整备份 · JSON</strong><span>全部原文与批注、回收站，可恢复</span></button><button data-export="markdown"><strong>批注笔记 · Markdown</strong><span>保留的重点摘录和你的想法</span></button></div></dialog>
+  <dialog id="capability-dialog"><div class="dialog-heading"><div><span class="eyebrow">CAPABILITIES</span><h2>当前可以做到什么</h2></div><button class="icon-button" data-close aria-label="关闭">×</button></div><ul class="capabilities"><li><strong>面板内高亮和侧边批注</strong><span class="supported">支持</span></li><li><strong>批注跳回面板内的原句</strong><span class="supported">支持</span></li><li><strong>本机保存与备份恢复</strong><span class="supported">支持</span></li><li><strong>原聊天区选中文字自动传入</strong><span>公开接口未提供</span></li><li><strong>跳到原聊天的某条消息</strong><span>公开接口未提供</span></li></ul><p class="form-help">可以通过已公开的聊天链接打开原聊天。精确回到高亮位置在本插件的阅读面板中完成。原生选区和消息级跳转未完成客户端实测，不能当作已支持。</p><p id="connection-info" class="form-help"></p></dialog>
+  <script>window.__NOTES_LOCAL_TOKEN__="__LOCAL_TOKEN__";</script>
+  <script>/*__VENDOR__*/</script>
+  <script>/*__RICH__*/</script>
+  <script>/*__JS__*/</script>
+</body>
+</html>

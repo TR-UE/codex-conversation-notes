@@ -1,0 +1,13 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "conversation-notes": {
+      "type": "stdio",
+      "command": "/bin/sh",
+      "args": [
+        "${PLUGIN_ROOT}/scripts/run-python.sh",
+        "${PLUGIN_ROOT}/server.py"
+      ]
+    }
+  }
+}

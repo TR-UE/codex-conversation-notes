@@ -1,0 +1,26 @@
+{
+  "name": "conversation-notes",
+  "version": "0.6.1",
+  "description": "Local conversation highlights, side annotations and persistent backups.",
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "墨记 · 对话批注",
+    "shortDescription": "高亮对话重点，写下侧边批注，保存在本机",
+    "longDescription": "支持双击编辑消息正文，加粗、表格、公式和图片排版，高亮、侧边批注与标签保存在本机。提供简约、纸页和雾蓝三种阅读风格及明暗模式。支持改名、同步新消息、删减与撤销、回收站、保留表格公式图片和批注的 PDF / Word 导出、JSON 备份和 Markdown 导出。",
+    "developerName": "Personal tools",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "打开墨记，导入这段对话，供我高亮和写批注。",
+      "把我指定的原文加入墨记。"
+    ],
+    "brandColor": "#242424",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg"
+  }
+}

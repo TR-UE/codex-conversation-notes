@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "conversation-notes": {
+      "type": "stdio",
+      "command": "/bin/sh",
+      "args": [
+        "${PLUGIN_ROOT}/scripts/run-python.sh",
+        "${PLUGIN_ROOT}/server.py"
+      ]
+    }
+  }
+}
